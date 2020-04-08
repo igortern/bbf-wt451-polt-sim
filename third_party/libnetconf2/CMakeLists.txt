@@ -1,0 +1,28 @@
+# libnetconf2 - NETCONF agent library
+#
+include(third_party)
+
+bcm_3rdparty_module_name(libnetconf2 "1.1.7")
+
+if(NETCONF_TOOLS_FROM_DEVEL)
+    set(LIBNETCONF2_VERSION devel)
+    bcm_3rdparty_download_wget("https://github.com/CESNET/libnetconf2/archive" "devel.tar.gz" "libnetconf2-devel")
+else()
+    bcm_3rdparty_download_wget("https://github.com/CESNET/libnetconf2/archive" "v${LIBNETCONF2_VERSION}.tar.gz")
+endif()
+
+bcm_3rdparty_add_dependencies(libyang libssh openssl libgcrypt)
+bcm_3rdparty_add_build_options(-DENABLE_BUILD_TESTS=OFF -DENABLE_VALGRIND_TESTS=OFF)
+bcm_3rdparty_add_build_options(-DENABLE_SSH=ON -DENABLE_TLS=ON)
+bcm_3rdparty_add_build_options(-DSSH_LIBRARY="${CMAKE_BINARY_DIR}/fs/lib")
+
+# Temporary override
+if(SIMULATION_BUILD)
+    set(CMAKE_C_COMPILER   gcc-5)
+    set(CMAKE_CXX_COMPILER g++-5)
+    set(CMAKE_LINKER gcc-5)
+endif()
+
+bcm_3rdparty_build_cmake()
+
+bcm_3rdparty_export()

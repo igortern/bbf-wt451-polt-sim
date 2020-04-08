@@ -1,0 +1,14 @@
+<netconf-server xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-server">
+    <listen>
+        <endpoint>
+            <name>default-ssh</name>
+            <ssh>
+                <tcp-server-parameters>
+                    <local-port>@SSH_PORT@</local-port>
+                </tcp-server-parameters>
+            </ssh>
+        </endpoint>
+    </listen>
+</netconf-server>
+
+
