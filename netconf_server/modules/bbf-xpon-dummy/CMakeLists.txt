@@ -1,0 +1,10 @@
+# Netconf modules
+if(NETCONF_SERVER)
+    bcm_module_name(netconf_bbf-xpon)
+    bcm_module_dependencies(PUBLIC sysrepo libnetconf2 netconf_modules)
+    bcm_module_header_paths(PUBLIC .)
+    bcm_module_cflags(PUBLIC -Wno-strict-prototypes)
+    bcm_module_definitions(PUBLIC -DNETCONF_MODULE_BBF_XPON)
+    bcm_module_srcs(bbf-xpon.c)
+    bcm_create_lib_target()
+endif()
