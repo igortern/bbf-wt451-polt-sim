@@ -1,6 +1,6 @@
 # TR-451 pOLT vendor interface
 if(OPEN_SOURCE)
-    add_subdirectory(sim)
+    bcm_add_subdirectory(sim)
 else()
-    add_subdirectory(bcm)
+    bcm_add_subdirectory(bcm)
 endif()
