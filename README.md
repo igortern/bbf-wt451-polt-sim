@@ -1,6 +1,6 @@
 # bbf-wt451-polt-sim
 
-*Copyright (c) 2016-2020 Broadcom. All Rights Reserved*
+**Copyright (c) 2016-2020 Broadcom. All Rights Reserved**
 
 pOLT Simulator for Broadband Forum WT-451 vOMCI project
 
@@ -82,8 +82,9 @@ The following commands are relative to build/fs directory.
 1) netopeer2-server must be started first. It can be done using
 bin/start_netconf_server.sh script.
 
+```
 > bin/start_netconf_server.sh [netopeer2-server parameters]
-
+```
 By default netopeer2-server is listening on non-standard port 10830
 (instead of the standard 830). It allows starting the server from
 regular user. Use "-help" to get the list of supported parameters
@@ -91,7 +92,9 @@ regular user. Use "-help" to get the list of supported parameters
 2) netopeer2-cli can be used for WT-451 NETCONF configuration. Alternatively,
 any other compliant netconf client can be used (for example, "Atom" by Nokia)
 
-# bin/sysrepotool.sh bin/netopeer2-cli
+```
+> bin/sysrepotool.sh bin/netopeer2-cli
+```
 A few relevant netopeer2-cli commands are below
 - connect --port 10830
 - subscribe
@@ -100,8 +103,9 @@ A few relevant netopeer2-cli commands are below
 
 3) Start pOLT simulator
 
-./start_netconf_server.sh [parameters]
 ```
+./start_netconf_server.sh [parameters]
+
 Below is output of "start_netconf_server.sh -help" command.
 bcmolt_netconf_server [-d] [-dummy_tr385] [-log level] [-srlog level] [-tr451_polt_log level] [-syslog]
   -d - debug mode. Stay in the foreground
@@ -258,4 +262,4 @@ The only vendor interface released as Open Source is "sim" which stands for simu
 Class hierarchy
 ======================
 
-See class-diagram.uml, class-diagram.png
+See class-diagram.uml, class-diagram.png in tr451_vomci_polt directory
