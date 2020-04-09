@@ -5,8 +5,6 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -29,3 +27,10 @@ jobs:
         make
         echo pOLT Simulator built successfully. 
         echo Build artifacts can be found in $GITHUB_WORKSPACE/build/fs
+
+    - uses: actions/upload-artifact@v1
+      if: success()
+      with:
+        name: build-artifact
+        path: build/fs
+    
