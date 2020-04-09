@@ -16,13 +16,6 @@ bcm_3rdparty_add_build_options(-DENABLE_BUILD_TESTS=OFF -DENABLE_VALGRIND_TESTS=
 bcm_3rdparty_add_build_options(-DENABLE_SSH=ON -DENABLE_TLS=ON)
 bcm_3rdparty_add_build_options(-DSSH_LIBRARY="${CMAKE_BINARY_DIR}/fs/lib")
 
-# Temporary override
-if(SIMULATION_BUILD)
-    set(CMAKE_C_COMPILER   gcc-5)
-    set(CMAKE_CXX_COMPILER g++-5)
-    set(CMAKE_LINKER gcc-5)
-endif()
-
 bcm_3rdparty_build_cmake()
 
 bcm_3rdparty_export()
