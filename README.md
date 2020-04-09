@@ -252,7 +252,6 @@ tr451_polt_vendor/<vendor>/tr451_polt_vendor_specific.h.
 
 The only vendor interface released as Open Source is "sim" which stands for simulation.
 
-======================
 Class hierarchy
 ======================
 
