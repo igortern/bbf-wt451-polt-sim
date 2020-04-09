@@ -24,13 +24,13 @@ jobs:
     - name: Build pOLT Simulator
       run: |
         echo Building pOLT Simulator..
-        make
+        make CCACHE=n
         echo pOLT Simulator built successfully. 
         echo Build artifacts can be found in $GITHUB_WORKSPACE/build/fs
 
     - uses: actions/upload-artifact@v1
       if: success()
       with:
-        name: build-artifact
+        name: build-artifacts
         path: build/fs
     
