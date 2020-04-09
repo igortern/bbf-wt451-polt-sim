@@ -12,6 +12,7 @@
           </keepalives>
           <local-port>10830</local-port>
         </tcp-server-parameters>
+      </ssh>
     </endpoint>
   </listen>
 </netconf-server>
