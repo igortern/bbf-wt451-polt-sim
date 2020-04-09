@@ -57,7 +57,6 @@ packages.
 Once the build is complete, build artifacts are located in build/fs
 subdfirectory.
 
-======================
 Build artifacts
 ======================
 All build artifacts are created in build/fs directory. The following artifacts are relative to build/fs.
@@ -73,7 +72,6 @@ All build artifacts are created in build/fs directory. The following artifacts a
 - bin/ - executables provided by third-party libraries (such as sysrepoctl, etc.)
 - sysrepo/ - sysrepo repository
 
-========================
 Starting the application
 ========================
 The following commands are relative to build/fs directory.
@@ -90,28 +88,28 @@ regular user. Use "-help" to get the list of supported parameters
 2) netopeer2-cli can be used for WT-451 NETCONF configuration. Alternatively,
 any other compliant netconf client can be used (for example, "Atom" by Nokia)
 
-> bin/sysrepotool.sh bin/netopeer2-cli
+# bin/sysrepotool.sh bin/netopeer2-cli
 A few relevant netopeer2-cli commands are below
-> connect --port 10830
-> subscribe
-> edit-config --target running --defop  merge --test test-then-set --config=../../netconf_server/bbf-vomci-cli-examples/1-set-tr451-server.yc
-> edit-config --target running --defop  merge --test test-then-set --config=../../netconf_server/bbf-vomci-cli-examples/2-add-interfaces-olt.yc
+- connect --port 10830
+- subscribe
+- edit-config --target running --defop  merge --test test-then-set --config=../../netconf_server/bbf-vomci-cli-examples/1-set-tr451-server.yc
+- edit-config --target running --defop  merge --test test-then-set --config=../../netconf_server/bbf-vomci-cli-examples/2-add-interfaces-olt.yc
 
 3) Start pOLT simulator
 
-> ./start_netconf_server.sh [parameters]
-
+./start_netconf_server.sh [parameters]
+```
 Below is output of "start_netconf_server.sh -help" command.
 bcmolt_netconf_server [-d] [-dummy_tr385] [-log level] [-srlog level] [-tr451_polt_log level] [-syslog]
-         -d - debug mode. Stay in the foreground
-         -dummy_tr385 - Dummy TR-385 management. Register for some TR-385 events
-         -syslog - log to syslog
-         -tr451_polt_log error|info|debug TR-451 pOLT log level
-         -log error|info|debug - netconf server log level
-         -srlog error|info|debug - sysrepo log level
+  -d - debug mode. Stay in the foreground
+  -dummy_tr385 - Dummy TR-385 management. Register for some TR-385 events
+  -syslog - log to syslog
+  -tr451_polt_log error|info|debug TR-451 pOLT log level
+  -log error|info|debug - netconf server log level
+  -srlog error|info|debug - sysrepo log level
 Parameters are self-explanatory.
 "-d" is recommented because using CLI in foreground mode is much more convenient
-
+```
 CLI interface
 =============
 pOLT simulator supports CLI interface with built-in help, history and TAB completion.
@@ -132,6 +130,7 @@ PRINT_LEVEL and FILE_LEVEL values are: DEBUG, INFO, ERROR.
 PRINT_LEVEL controls output on the screen. FILE_LEVEL controls output to a memory file or syslog.
 
 2) /Polt - pOLT debug directory contains the following commands. The parameters are self-explanatory:
+```
 ?
 Directory Polt/ - pOLT Debug
 Commands:
@@ -145,20 +144,18 @@ Commands:
     oNu_delete(3 parms): Delete ONU
     Inject(3 parms): Inject OMCI packet received from ONU
     Rx_mode(1 parms): Set Receive handling mode
-
+```
 NOTE: if vOMCI instance should communicate with pOLT simulator using
 authenticated connection, private key and certificate location
 must be set using "/polt/auth" CLI command BEFORE creating the
 relevant client and/or server endpoint.
 
-======================
 Implementation
 ======================
 
 Implementation is split in 2 parts. The first part handles NETCONF/YANG interfaces.
 It is implemented as a sysrepo2 application.
 
-======================
 NETCONF server
 ======================
 
@@ -174,6 +171,7 @@ which in turn generates NETCONF response.
 similarly to responses.
 
 The NETCONF/YANG part of TR-451 pOLT simulator is located in netconf_server/ directory
+```
 netconf_server/
 ├── bcmolt_netconf_server.c
 ├── CMakeLists.txt
@@ -197,7 +195,7 @@ netconf_server/
 │   ├── bcmolt_netconf_notifications.h
 │   └── CMakeLists.txt
 └── start_netconf_server.sh
-
+```
 File bbf-vomci.c implements WT-451 bbf-polt-vomci.yang YANG model. Other files listed above are
 common utilities and the "main" program.
 
@@ -207,9 +205,9 @@ This dummy module is required if there is no "real" TR-385 netconf server regist
 Otherwise, all ietf-interface changes will remain in "pending" datastore and some bbf-polt-vomci notifications
 will fail because of references to "non-existing" interfaces.
 
-======================
 gRPC client/server
 ======================
+```
 tr451_vomci_polt
 ├── bcm_tr451_polt_cli.cc                  <--- CLI commands
 ├── bcm_tr451_polt_client.cc               <--- gRPC client implementation
@@ -239,7 +237,7 @@ tr451_vomci_polt
     │   └── tr451_polt_vendor_specific.h      <--- simulation "vendor"-specific interfaces
     ├── tr451_polt_for_vendor.h            <--- Helper functions that "vendor" implementation is allowed to use
     └── tr451_polt_vendor.h                <--- Functions and interfaces that "vendor" sub-layer must implement
-
+```
 Although NETCONF/YANG server is implemented in C, gRPC client/server is implemented
 
 
