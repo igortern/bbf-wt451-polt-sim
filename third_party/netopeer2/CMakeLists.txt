@@ -43,6 +43,9 @@ bcm_3rdparty_add_build_options(-DENABLE_BUILD_TESTS=OFF -DENABLE_VALGRIND_TESTS=
 bcm_3rdparty_add_build_options(-DLIBNETCONF2_ENABLED_SSH=ON)
 #bcm_3rdparty_add_build_options(-DDATA_CHANGE_TIMEOUT=10)
 bcm_3rdparty_add_env_variables(SYSREPO_REPOSITORY_PATH=${CMAKE_BINARY_DIR}/fs/sysrepo)
+if(BCM_CONFIG_HOST MATCHES "x86")
+   bcm_3rdparty_add_env_variables(PATH=${CMAKE_BINARY_DIR}/fs/bin:$ENV{PATH})
+endif()
 set(_NETOPEER2-SERVER_SRC_DIR ${NETOPEER2_BASE_DIR}/server)
 set(_NETOPEER2-SERVER_TYPE APPLICATION)
 add_custom_command(OUTPUT ${_${_MOD_NAME_UPPER}_LOADED_FILE}
