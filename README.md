@@ -1,4 +1,7 @@
 # bbf-wt451-polt-sim
+
+*Copyright (c) 2016-2020 Broadcom. All Rights Reserved*
+
 pOLT Simulator for Broadband Forum WT-451 vOMCI project
 
 The project implements pOLT interfaces defined
