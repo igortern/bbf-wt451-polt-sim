@@ -8,7 +8,6 @@ on:
   pull_request:
     branches:
       - master 
-      - devel
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,6 +18,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: set environment variables
+      uses: allenevans/set-env@v1.0.0
+      with:
+          overwrite: true
+          GITHUB_WORKSPACE: $GITHUB_WORKSPACE/master
+
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       with:
