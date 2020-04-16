@@ -7,7 +7,6 @@ name: CI
 on:
   pull_request:
     branches:
-      - master 
       - devel
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -19,22 +18,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - name: set environment variables
+      uses: allenevans/set-env@v1.0.0
       with:
-        path: $GITHUB_REF
+          overwrite: true
+          GITHUB_WORKSPACE: $GITHUB_WORKSPACE/devel
+
+    - uses: actions/checkout@v2
 
     # Runs a set of commands using the runners shell
     - name: Build pOLT Simulator
       run: |
-        echo Building pOLT Simulator..
-        make -C $GITHUB_WORKSPACE/$GITHUB_REF CCACHE=n
+        echo Building pOLT Simulator in $GITHUB_WORKSPACE/build ..
+        make CCACHE=n
         echo pOLT Simulator built successfully. 
-        echo Build artifacts can be found in $GITHUB_WORKSPACE/$GITHUB_REF/build/fs
+        echo Build artifacts can be found in $GITHUB_WORKSPACE/build/fs
 
     - uses: actions/upload-artifact@v1
       if: success()
       with:
         name: build-artifacts
-        path: $GITHUB_REF/build/fs
+        path: build/fs
     
