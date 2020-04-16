@@ -13,7 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ::set-env name=GITHUB_WORKSPACE::$GITHUB_WORKSPACE/devel
+  env:
+    GITHUB_WORKSPACE: ${{$GITHUB_WORKSPACE/devel}}
 
   # This workflow contains a single job called "build"
   build:
