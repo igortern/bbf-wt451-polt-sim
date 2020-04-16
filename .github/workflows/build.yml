@@ -18,28 +18,21 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: set environment variables
-      uses: allenevans/set-env@v1.0.0
-      with:
-          overwrite: true
-          GITHUB_WORKSPACE: $GITHUB_WORKSPACE/master
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-      with:
-        path: $GITHUB_REF
 
     # Runs a set of commands using the runners shell
     - name: Build pOLT Simulator
       run: |
         echo Building pOLT Simulator..
-        make -C $GITHUB_WORKSPACE/$GITHUB_REF CCACHE=n
+        make CCACHE=n
         echo pOLT Simulator built successfully. 
-        echo Build artifacts can be found in $GITHUB_WORKSPACE/$GITHUB_REF/build/fs
+        echo Build artifacts can be found in $GITHUB_WORKSPACE/build/fs
 
     - uses: actions/upload-artifact@v1
       if: success()
       with:
-        name: build-artifacts
-        path: $GITHUB_REF/build/fs
+        name: build-artifacts-master
+        path: build/fs
     
