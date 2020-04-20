@@ -2,10 +2,14 @@
 #
 include(third_party)
 
-bcm_3rdparty_module_name(libnetconf2 "1.1.7")
-
 if(NETCONF_TOOLS_FROM_DEVEL)
-    set(LIBNETCONF2_VERSION devel)
+    set(_VERSION "devel")
+else()
+    set(_VERSION "1.1.7")
+endif()
+bcm_3rdparty_module_name(libnetconf2 ${_VERSION})
+
+if("${LIBNETCONF2_VERSION}" STREQUAL "devel")
     bcm_3rdparty_download_wget("https://github.com/CESNET/libnetconf2/archive" "devel.tar.gz" "libnetconf2-devel")
 else()
     bcm_3rdparty_download_wget("https://github.com/CESNET/libnetconf2/archive" "v${LIBNETCONF2_VERSION}.tar.gz")

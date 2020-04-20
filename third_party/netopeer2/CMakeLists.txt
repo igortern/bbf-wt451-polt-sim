@@ -2,17 +2,19 @@
 #
 include(third_party)
 
-bcm_make_debug_option(NETCONF_TOOLS_FROM_DEVEL BOOL "Take netopeer2, sysrepo, libyang and libnetconf2 from devel" y)
 bcm_make_normal_option(NETCONF_ENABLE_NACM BOOL "Enable NETCONF Access Control Management (NACM)" n)
 bcm_make_normal_option(NETOPEER_SSH_PORT STRING "Default SSH port netopeer listens on" "10830")
 
-set(NETOPEER_PACKAGE_VERSION "1.1.7")
+if(NETCONF_TOOLS_FROM_DEVEL)
+    set(_VERSION "devel")
+else()
+    set(_VERSION "1.1.7")
+endif()
 
 # Netopeer2 consists from multiple components
 # Umbrella module
-bcm_3rdparty_module_name(netopeer2 ${NETOPEER_PACKAGE_VERSION})
-if(NETCONF_TOOLS_FROM_DEVEL)
-    set(NETOPEER_PACKAGE_VERSION "devel")
+bcm_3rdparty_module_name(netopeer2 ${_VERSION})
+if("${NETOPEER2_VERSION}" STREQUAL "devel")
     bcm_3rdparty_download_wget("https://github.com/CESNET/Netopeer2/archive" "devel-server.tar.gz" "Netopeer2-devel-server")
 else()
     bcm_3rdparty_download_wget("https://github.com/CESNET/Netopeer2/archive" "v${NETOPEER2_VERSION}.tar.gz" "Netopeer2-${NETOPEER2_VERSION}")
@@ -33,7 +35,7 @@ endif()
 set(_SYSREPOCFG_EXECUTABLE ${CMAKE_BINARY_DIR}/fs/bin/sysrepotool.sh ${_SYSREPO_TOOLS_DIR}/sysrepocfg)
 
 # Server
-bcm_3rdparty_module_name(netopeer2-server ${NETOPEER_PACKAGE_VERSION})
+bcm_3rdparty_module_name(netopeer2-server ${NETOPEER2_VERSION})
 bcm_3rdparty_add_dependencies(libyang libnetconf2 libssh sysrepo)
 bcm_3rdparty_add_build_options(-DSYSREPOCTL="${_SYSREPO_TOOLS_DIR}/sysrepoctl")
 bcm_3rdparty_add_build_options(-DSYSREPOCFG="${_SYSREPO_TOOLS_DIR}/sysrepocfg")
@@ -75,7 +77,7 @@ unset(_DISABLE_NACM_COMMAND)
 unset(_NETOPEER2_CONFIGURED_FILE)
 
 # CLI
-bcm_3rdparty_module_name(netopeer2-cli ${NETOPEER_PACKAGE_VERSION})
+bcm_3rdparty_module_name(netopeer2-cli ${NETOPEER2_VERSION})
 bcm_3rdparty_add_dependencies(netopeer2-server)
 set(_NETOPEER2-CLI_SRC_DIR ${NETOPEER2_BASE_DIR}/cli)
 set(_NETOPEER2-CLI_TYPE APPLICATION)

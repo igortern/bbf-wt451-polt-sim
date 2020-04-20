@@ -26,16 +26,20 @@
 macro(bcm_3rdparty_module_name MODULE_NAME VERSION)
     bcm_module_name(${MODULE_NAME})
     string(TOUPPER ${MODULE_NAME} _MOD_NAME_UPPER)
-    if(${_MOD_NAME_UPPER}_VERSION AND NOT ("${${_MOD_NAME_UPPER}_VERSION}" STREQUAL "${VERSION}"))
-        unset(${_MOD_NAME_UPPER}_VERSION CACHE)
-    endif()
     bcm_make_normal_option(${_MOD_NAME_UPPER}_VERSION STRING "${MODULE_NAME} version" "${VERSION}")
+
+    if(${_MOD_NAME_UPPER}_VERSION)
+        set(_VERSION ${${_MOD_NAME_UPPER}_VERSION})
+    else()
+        set(_VERSION ${VERSION})
+    endif()
 
     set(_${_MOD_NAME_UPPER}_TARGET ${MODULE_NAME}_${${_MOD_NAME_UPPER}_VERSION})
     set(_${_MOD_NAME_UPPER}_INSTALL_TOP ${CMAKE_BINARY_DIR}/fs)
 
-    set(_${_MOD_NAME_UPPER}_LOADED_FILE ${CMAKE_CURRENT_BINARY_DIR}/.${MODULE_NAME}_${VERSION}_loaded)
-    set(_${_MOD_NAME_UPPER}_INSTALLED_FILE ${CMAKE_CURRENT_BINARY_DIR}/.${MODULE_NAME}_${VERSION}_installed)
+    set(_${_MOD_NAME_UPPER}_LOADED_FILE ${CMAKE_CURRENT_BINARY_DIR}/.${MODULE_NAME}_${_VERSION}_loaded)
+    set(_${_MOD_NAME_UPPER}_INSTALLED_FILE ${CMAKE_CURRENT_BINARY_DIR}/.${MODULE_NAME}_${_VERSION}_installed)
+    unset(_VERSION)
 endmacro(bcm_3rdparty_module_name)
 
 #======

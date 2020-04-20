@@ -2,15 +2,19 @@
 #
 include(third_party)
 
-set(LIBYANG_PACKAGE_VERSION "1.0.130")
-
-bcm_3rdparty_module_name(libyang "v${LIBYANG_PACKAGE_VERSION}")
-
+bcm_make_debug_option(NETCONF_TOOLS_FROM_DEVEL BOOL "Take netopeer2, sysrepo, libyang and libnetconf2 from devel" y)
 if(NETCONF_TOOLS_FROM_DEVEL)
-    set(LIBYANG_VERSION devel)
+    set(_VERSION "devel")
+else()
+    set(_VERSION "1.0.130")
+endif()
+
+bcm_3rdparty_module_name(libyang "${_VERSION}")
+
+if("${LIBYANG_VERSION}" STREQUAL "devel")
     bcm_3rdparty_download_wget("https://github.com/CESNET/libyang/archive" "devel.zip" "libyang-devel")
 else()
-    bcm_3rdparty_download_wget("https://github.com/CESNET/libyang/archive" "${LIBYANG_VERSION}.tar.gz" libyang-${LIBYANG_PACKAGE_VERSION})
+    bcm_3rdparty_download_wget("https://github.com/CESNET/libyang/archive" "v${LIBYANG_VERSION}.tar.gz" libyang-${LIBYANG_VERSION})
 endif()
 
 bcm_3rdparty_add_dependencies(pcre)
