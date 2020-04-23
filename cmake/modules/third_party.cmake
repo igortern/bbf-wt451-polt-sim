@@ -78,12 +78,18 @@ macro(bcm_3rdparty_download_wget DOMAIN ARCHIVE)
         set(_CMD_PATCH COMMAND patch -p0 -i ${_PATCH_FILE} && echo ${_MOD_NAME} patched)
     endif()
 
+    # Pull archive from public repository only if needed
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${ARCHIVE})
+        set(_PULL_ARCHIVE_COMMAND COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/${ARCHIVE} .)
+    else()
+        set(_PULL_ARCHIVE_COMMAND COMMAND wget --no-check-certificate ${DOMAIN}/${ARCHIVE})
+    endif()
     add_custom_command(OUTPUT ${_${_MOD_NAME_UPPER}_LOADED_FILE}
         COMMAND echo "Loading ${ARCHIVE} from ${DOMAIN}.."
         COMMAND rm -rf ${_${_MOD_NAME_UPPER}_SRC_DIR} ${DOMAIN}/${ARCHIVE}*
-        COMMAND wget --no-check-certificate ${DOMAIN}/${ARCHIVE}
+        ${_PULL_ARCHIVE_COMMAND}
         COMMAND ${_UNPACK_COMMAND} ${ARCHIVE}
-        COMMAND rm ${ARCHIVE}
+        COMMAND rm -f ${ARCHIVE}
         COMMAND mkdir -p ${_${_MOD_NAME_UPPER}_SRC_DIR}/build
         COMMAND touch ${_${_MOD_NAME_UPPER}_LOADED_FILE}
         COMMAND echo "${ARCHIVE} loaded and unpacked in ${_${_MOD_NAME_UPPER}_SRC_DIR}"
