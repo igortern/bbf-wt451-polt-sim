@@ -5,7 +5,7 @@ include(third_party)
 if(NETCONF_TOOLS_FROM_DEVEL)
     set(_VERSION "devel")
 else()
-    set(_VERSION "1.4.2")
+    set(_VERSION "1.4.58")
 endif()
 bcm_3rdparty_module_name(sysrepo ${_VERSION})
 
