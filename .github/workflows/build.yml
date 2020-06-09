@@ -4,9 +4,9 @@ name: CI
 
 # Controls when the action will run. Triggers the workflow on pull and push request events
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      - devel
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,5 +31,5 @@ jobs:
     - uses: actions/upload-artifact@v1
       if: success()
       with:
-        name: build-artifacts-master
+        name: build-artifacts-devel
         path: build/fs
