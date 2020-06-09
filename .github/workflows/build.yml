@@ -2,12 +2,11 @@
 
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events
+# Controls when the action will run. Triggers the workflow on pull and push request events
 on:
   pull_request:
     branches:
-      - master 
+      - master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,14 +24,12 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Build pOLT Simulator
       run: |
-        echo Building pOLT Simulator..
+        echo Building pOLT Simulator in $GITHUB_WORKSPACE/build ..
         make CCACHE=n
-        echo pOLT Simulator built successfully. 
+        echo pOLT Simulator built successfully.
         echo Build artifacts can be found in $GITHUB_WORKSPACE/build/fs
-
     - uses: actions/upload-artifact@v1
       if: success()
       with:
         name: build-artifacts-master
         path: build/fs
-    
