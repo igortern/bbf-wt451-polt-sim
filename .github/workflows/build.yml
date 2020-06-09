@@ -6,10 +6,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - devel
-  push:
-    branches:
-      - devel
+      - master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,5 +31,5 @@ jobs:
     - uses: actions/upload-artifact@v1
       if: success()
       with:
-        name: build-artifacts-devel
+        name: build-artifacts-master
         path: build/fs
