@@ -5,7 +5,7 @@ include(third_party)
 if(NETCONF_TOOLS_FROM_DEVEL)
     set(_VERSION "devel")
 else()
-    set(_VERSION "1.4.58")
+    set(_VERSION "1.4.66")
 endif()
 bcm_3rdparty_module_name(sysrepo ${_VERSION})
 
@@ -27,7 +27,7 @@ else()
 endif()
 bcm_3rdparty_add_build_options(-DREPO_PATH:PATH=${_REPO_LOC})
 
-bcm_3rdparty_build_cmake()
+bcm_3rdparty_build_cmake(shm_clean install)
 
 bcm_3rdparty_export()
 

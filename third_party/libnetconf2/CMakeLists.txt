@@ -6,7 +6,7 @@ bcm_make_debug_option(NETCONF_TOOLS_FROM_DEVEL BOOL "Take netopeer2, sysrepo, li
 if(NETCONF_TOOLS_FROM_DEVEL)
     set(_VERSION "devel")
 else()
-    set(_VERSION "1.1.24")
+    set(_VERSION "1.1.26")
 endif()
 bcm_3rdparty_module_name(libnetconf2 ${_VERSION})
 
@@ -19,7 +19,6 @@ endif()
 bcm_3rdparty_add_dependencies(libyang libssh openssl libgcrypt)
 bcm_3rdparty_add_build_options(-DENABLE_BUILD_TESTS=OFF -DENABLE_VALGRIND_TESTS=OFF)
 bcm_3rdparty_add_build_options(-DENABLE_SSH=ON -DENABLE_TLS=ON)
-bcm_3rdparty_add_build_options(-DSSH_LIBRARY="${CMAKE_BINARY_DIR}/fs/lib")
 
 bcm_3rdparty_build_cmake()
 
